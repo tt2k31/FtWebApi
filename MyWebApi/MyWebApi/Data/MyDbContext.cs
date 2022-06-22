@@ -11,6 +11,7 @@ namespace MyWebApi.Data
         public DbSet<Loai> Loais { get; set; }
         public DbSet<DonHang> donHang { get; set; }
         public DbSet<DonHangChiTiet> DonHangChiTiets { get; set; }
+        public DbSet<NguoiDung> NguoiDungs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,6 +38,13 @@ namespace MyWebApi.Data
                         .WithMany(e => e.DonHangChiTiets)
                         .HasForeignKey(e => e.Id)
                         .HasConstraintName("FK_DHCT_HH");
+            });
+            modelBuilder.Entity<NguoiDung>(e =>
+            {
+                e.HasIndex(e => e.Id).IsUnique();
+                e.Property(e => e.HoTen).IsRequired().HasMaxLength(50);
+                e.Property(e => e.Email).IsRequired().HasMaxLength(50);
+
             });
         }
 
