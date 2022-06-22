@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MyWebApi.Data;
+using MyWebApi.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,9 +38,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-                
-                    
 
+
+builder.Services.AddScoped<ILoaiRepository, LoaiRepository>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
