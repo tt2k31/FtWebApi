@@ -16,11 +16,11 @@ builder.Services.AddDbContext<MyDbContext>(options =>
        options.UseSqlServer(builder.Configuration.GetConnectionString("MyDb")));
 
 //var secretKey = builder.Configuration["AppSettings:SecretKey"];
+builder.Services.Configure<AppSettings>
+    (builder.Configuration.GetSection("AppSettings"));
 
 ConfigurationManager configuration = builder.Configuration;
 var k = configuration["AppSettings:SecretKey"];
-
-//var secretkey = "mmmm";
 
 var secretKeyByte = Encoding.UTF8.GetBytes(k);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -50,6 +50,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+IConfiguration conFiguration = app.Configuration;
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
